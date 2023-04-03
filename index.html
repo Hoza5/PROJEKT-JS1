@@ -1,12 +1,105 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Výpočet maximálního napětí v prutu</title>
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <style>
+    input[type=number] {
+      width: 70px;
+    }
+    body {
+      background-color: #f2f2f2;
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    h1 {
+      color: #0099ff;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    form {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    label {
+      display: inline-block;
+      width: 120px;
+      margin-bottom: 10px;
+    }
+    button {
+      background-color: #0099ff;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #0077cc;
+    }
+    #vysledek, #kontrola {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    #kontrola {
+      display: none;
+    }
+    #obrazek {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  </style>
 </head>
 <body>
-  
+  <h1>Výpočet maximálního napětí v prutu</h1>
+  <div id="obrazek">
+    <img src="https://slideplayer.cz/slide/17455448/102/images/8/Kritick%C3%A9+nap%C4%9Bt%C3%AD%2C+%C5%A1t%C3%ADhlost+prutu%2C+Eulerova+hyperbola.jpg" alt="Ilustrační obrázek prutu" width="400">
+  </div>
+  <form>
+    <label for="sila">Síla (kN):</label>
+    <input type="number" id="sila" name="sila" value="100" min="0"><br>
+    <label for="prumer">Průměr (cm):</label>
+    <input type="number" id="prumer" name="prumer" value="10" min="0"><br>
+    <button type="button" onclick="vypocet()">Vypočítat</button>
+    <button type="button" onclick="kontrola()">Kontrolovat</button>
+  </form>
+  <div id="vysledek"></div>
+  <div id="kontrola"></div>
+
+  <script>
+function vypocet() {
+    var sila = document.getElementById("sila").value
+    var prumer = document.getElementById("prumer").value;
+var plocha = Math.PI * Math.pow((prumer/2), 2);
+var napeti = sila / plocha;
+document.getElementById("vysledek").innerHTML = "Maximální napětí v prutu je " + napeti.toFixed(2) + " MPa.";
+document.getElementById("kontrola").style.display = "none";
+} function kontrola() {
+  var sila = document.getElementById("sila").value;
+  var prumer = document.getElementById("prumer").value;
+  var plocha = Math.PI * Math.pow((prumer/2), 2);
+  var napeti = sila / plocha;
+  var maxNapeti = 200;
+  if (napeti <= maxNapeti) {
+    document.getElementById("kontrola").innerHTML = "Výpočet je správný.";
+    document.getElementById("kontrola").style.color = "green";
+  } else {
+    document.getElementById("kontrola").innerHTML = "Výpočet není správný. Maximální napětí by mělo být menší nebo rovno " + maxNapeti.toFixed(2) + " MPa.";
+    document.getElementById("kontrola").style.color = "red";
+  }
+  document.getElementById("kontrola").style.display = "block";
+}
+</script>
 </body>
 </html>
